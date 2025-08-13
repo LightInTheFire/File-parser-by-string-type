@@ -32,7 +32,7 @@ class ArgumentsParserTest {
 
     @Test
     void shouldNotUpdatePrefixWithInssuficientArgs() {
-        String[] args = {"-p"};
+        String[] args = {"-p", "text.txt"};
         ArgumentsParser argumentsParser = new ArgumentsParser(args);
         FilterConfiguration filterConfiguration = argumentsParser.getFilterConfiguration();
 
@@ -41,7 +41,7 @@ class ArgumentsParserTest {
 
     @Test
     void shouldNotUpdatePathToSaveWithInssuficientArgs() {
-        String[] args = {"-o"};
+        String[] args = {"-o", "text.txt"};
         ArgumentsParser argumentsParser = new ArgumentsParser(args);
         FilterConfiguration filterConfiguration = argumentsParser.getFilterConfiguration();
 
@@ -50,7 +50,7 @@ class ArgumentsParserTest {
 
     @Test
     void shouldUpdatePrefix() {
-        String[] args = {"-p", "prefix_"};
+        String[] args = {"-p", "prefix_", "text.txt"};
         ArgumentsParser argumentsParser = new ArgumentsParser(args);
         FilterConfiguration filterConfiguration = argumentsParser.getFilterConfiguration();
 
@@ -59,7 +59,7 @@ class ArgumentsParserTest {
 
     @Test
     void shouldUpdatePathToSave() {
-        String[] args = {"-o", "some/path"};
+        String[] args = {"-o", "some/path", "text.txt"};
         ArgumentsParser argumentsParser = new ArgumentsParser(args);
         FilterConfiguration filterConfiguration = argumentsParser.getFilterConfiguration();
 
@@ -68,7 +68,7 @@ class ArgumentsParserTest {
 
     @Test
     void shouldUpdateStatisticsTypeToFull() {
-        String[] args = {"-f"};
+        String[] args = {"-f", "text.txt"};
         ArgumentsParser argumentsParser = new ArgumentsParser(args);
         FilterConfiguration filterConfiguration = argumentsParser.getFilterConfiguration();
 
@@ -77,10 +77,18 @@ class ArgumentsParserTest {
 
     @Test
     void shouldUpdateStatisticsTypeToSimple() {
-        String[] args = {"-s"};
+        String[] args = {"-s", "text.txt"};
         ArgumentsParser argumentsParser = new ArgumentsParser(args);
         FilterConfiguration filterConfiguration = argumentsParser.getFilterConfiguration();
 
         assertEquals(FilterConfiguration.Statistics.SIMPLE, filterConfiguration.getStatistics());
+    }
+
+    @Test
+    void shouldThrowWhenNoFilesToProcessProvided() {
+        String[] args = {"-f", "-a"};
+        ArgumentsParser argumentsParser = new ArgumentsParser(args);
+
+        assertThrows(IllegalArgumentException.class, argumentsParser::getFilterConfiguration);
     }
 }

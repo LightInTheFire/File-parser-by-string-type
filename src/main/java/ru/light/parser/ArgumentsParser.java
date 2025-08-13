@@ -35,7 +35,7 @@ public class ArgumentsParser {
                 Option optionByValue = Option.getOptionByValue(arg.substring(1));
                 switch (optionByValue) {
                     case PATH_TO_OUTPUT -> {
-                        if (i + 1 < argsLength) {
+                        if (isNextTokenValid(i, argsLength)) {
                             filterConfigBuilder.pathToOutputFiles(args[i + 1]);
                             i++;
                         } else {
@@ -43,7 +43,7 @@ public class ArgumentsParser {
                         }
                     }
                     case OUTPUT_FILE_PREFIX -> {
-                        if (i + 1 < argsLength) {
+                        if (isNextTokenValid(i, argsLength)) {
                             filterConfigBuilder.prefix(args[i + 1]);
                             i++;
                         } else {
@@ -69,6 +69,16 @@ public class ArgumentsParser {
             }
         }
 
+        if (inputFiles.isEmpty()) {
+            throw new IllegalArgumentException("No files to process provided");
+        }
+
         return filterConfigBuilder.build();
+    }
+
+    private boolean isNextTokenValid(int i, int argsLength) {
+        return i + 1 < argsLength
+                && !args[i + 1].endsWith(".txt")
+                && !args[i + 1].startsWith("-");
     }
 }
