@@ -4,14 +4,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.light.config.FilterConfiguration;
 
+import java.io.IOException;
+import java.nio.file.Files;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ArgumentsParserTest {
     static FilterConfiguration defaultConfiguration;
+    static String pathToTempFile;
+
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         defaultConfiguration = FilterConfiguration.builder().build();
+        pathToTempFile = Files.createTempFile("text", ".txt").toFile().getPath();
     }
 
     @Test
@@ -23,7 +29,7 @@ class ArgumentsParserTest {
 
     @Test
     void shouldCreateDefaultConfig() {
-        String[] args = {"text.txt"};
+        String[] args = {pathToTempFile};
         ArgumentsParser argumentsParser = new ArgumentsParser(args);
         FilterConfiguration filterConfiguration = argumentsParser.getFilterConfiguration();
 
@@ -32,7 +38,7 @@ class ArgumentsParserTest {
 
     @Test
     void shouldNotUpdatePrefixWithInssuficientArgs() {
-        String[] args = {"-p", "text.txt"};
+        String[] args = {"-p", pathToTempFile};
         ArgumentsParser argumentsParser = new ArgumentsParser(args);
         FilterConfiguration filterConfiguration = argumentsParser.getFilterConfiguration();
 
@@ -41,7 +47,7 @@ class ArgumentsParserTest {
 
     @Test
     void shouldNotUpdatePathToSaveWithInssuficientArgs() {
-        String[] args = {"-o", "text.txt"};
+        String[] args = {"-o", pathToTempFile};
         ArgumentsParser argumentsParser = new ArgumentsParser(args);
         FilterConfiguration filterConfiguration = argumentsParser.getFilterConfiguration();
 
@@ -50,7 +56,7 @@ class ArgumentsParserTest {
 
     @Test
     void shouldUpdatePrefix() {
-        String[] args = {"-p", "prefix_", "text.txt"};
+        String[] args = {"-p", "prefix_", pathToTempFile};
         ArgumentsParser argumentsParser = new ArgumentsParser(args);
         FilterConfiguration filterConfiguration = argumentsParser.getFilterConfiguration();
 
@@ -59,7 +65,7 @@ class ArgumentsParserTest {
 
     @Test
     void shouldUpdatePathToSave() {
-        String[] args = {"-o", "some/path", "text.txt"};
+        String[] args = {"-o", "some/path", pathToTempFile};
         ArgumentsParser argumentsParser = new ArgumentsParser(args);
         FilterConfiguration filterConfiguration = argumentsParser.getFilterConfiguration();
 
@@ -68,7 +74,7 @@ class ArgumentsParserTest {
 
     @Test
     void shouldUpdateStatisticsTypeToFull() {
-        String[] args = {"-f", "text.txt"};
+        String[] args = {"-f", pathToTempFile};
         ArgumentsParser argumentsParser = new ArgumentsParser(args);
         FilterConfiguration filterConfiguration = argumentsParser.getFilterConfiguration();
 
@@ -77,7 +83,7 @@ class ArgumentsParserTest {
 
     @Test
     void shouldUpdateStatisticsTypeToSimple() {
-        String[] args = {"-s", "text.txt"};
+        String[] args = {"-s", pathToTempFile};
         ArgumentsParser argumentsParser = new ArgumentsParser(args);
         FilterConfiguration filterConfiguration = argumentsParser.getFilterConfiguration();
 

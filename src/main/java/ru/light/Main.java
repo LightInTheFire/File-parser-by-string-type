@@ -8,14 +8,15 @@ public class Main {
     public static void main(String[] args) {
 
         ArgumentsParser argumentsParser;
+        FilterConfiguration filterConfiguration;
         try {
             argumentsParser = new ArgumentsParser(args);
+            filterConfiguration = argumentsParser.getFilterConfiguration();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return;
         }
 
-        FilterConfiguration filterConfiguration = argumentsParser.getFilterConfiguration();
 
         DataClassifier dataClassifier = new DataClassifier(filterConfiguration,
                 new FileParser(),

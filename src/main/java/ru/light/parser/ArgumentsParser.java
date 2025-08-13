@@ -60,10 +60,15 @@ public class ArgumentsParser {
                 try {
                     inputFile = Paths.get(arg).toFile();
                 } catch (RuntimeException e) {
-                    System.out.printf("No such file or directory: %s%n", arg);
+                    System.out.printf("No such file in current directory: %s%n", arg);
                     continue;
                 }
-                inputFiles.add(inputFile);
+
+                if (inputFile.exists()) {
+                    inputFiles.add(inputFile);
+                } else {
+                    System.out.printf("No such file in current directory: %s%n", arg);
+                }
             } else {
                 System.out.printf("Unknown argument provided: %s%n", arg);
             }
