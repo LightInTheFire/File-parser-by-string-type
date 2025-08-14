@@ -36,7 +36,14 @@ public class ArgumentsParser {
                 switch (optionByValue) {
                     case PATH_TO_OUTPUT -> {
                         if (isNextTokenValid(i, argsLength)) {
-                            filterConfigBuilder.pathToOutputFiles(args[i + 1]);
+                            String pathToOutputFile = args[i + 1];
+                            try {
+                                Paths.get(pathToOutputFile);
+                            } catch (Exception e) {
+                                System.out.printf("Invalid path to output file {%s}, will be used pwd %n",
+                                        pathToOutputFile);
+                            }
+                            filterConfigBuilder.pathToOutputFiles(pathToOutputFile);
                             i++;
                         } else {
                             System.out.println("No path to output files provided, will be used pwd");
