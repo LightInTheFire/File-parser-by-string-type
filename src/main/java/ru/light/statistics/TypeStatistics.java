@@ -5,6 +5,7 @@ import java.util.List;
 
 public abstract class TypeStatistics {
     protected List<String> elements;
+
     protected TypeStatistics() {
         this.elements = new ArrayList<>();
     }

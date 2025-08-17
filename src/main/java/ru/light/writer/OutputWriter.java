@@ -1,4 +1,4 @@
-package ru.light;
+package ru.light.writer;
 
 import lombok.Setter;
 

@@ -10,13 +10,13 @@ import ru.light.statistics.FloatStatistics;
 import ru.light.statistics.IntegerStatistics;
 import ru.light.statistics.StringStatistics;
 import ru.light.statistics.TypeStatistics;
+import ru.light.writer.OutputWriter;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,7 +60,7 @@ public class DataClassifier {
                     -> typeStatistics.get(lineType).appendElements(lines));
 
             for (LineType lineType : parsedFile.keySet()) {
-                outputWriter.writeToFile(pathsMap.get(lineType),  parsedFile.get(lineType));
+                outputWriter.writeToFile(pathsMap.get(lineType), parsedFile.get(lineType));
             }
 
             outputWriter.setWriterOption(StandardOpenOption.APPEND);
