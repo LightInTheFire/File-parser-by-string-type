@@ -2,6 +2,8 @@ package ru.light.parser;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +46,7 @@ public class FileParser {
 
     private boolean isStringInteger(String s) {
         try {
-            Long.parseLong(s);
+            new BigInteger(s);
         } catch (NumberFormatException e) {
             return false;
         }
@@ -53,7 +55,7 @@ public class FileParser {
 
     private boolean isStringFloat(String s) {
         try {
-            Double.parseDouble(s);
+            new BigDecimal(s);
         } catch (NumberFormatException e) {
             return false;
         }
