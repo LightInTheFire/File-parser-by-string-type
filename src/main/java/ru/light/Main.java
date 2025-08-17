@@ -18,9 +18,7 @@ public class Main {
         }
 
 
-        DataClassifier dataClassifier = new DataClassifier(filterConfiguration,
-                new FileParser(),
-                new OutputWriter());
+        DataClassifier dataClassifier = new DataClassifier(filterConfiguration);
         dataClassifier.processFiles(argumentsParser.getInputFiles());
     }
 }
